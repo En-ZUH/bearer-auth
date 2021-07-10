@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const users = new mongoose.Schema({
+const SECRET = process.env.SECRET;
+
+const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
 });
@@ -12,21 +14,21 @@ const users = new mongoose.Schema({
 // Adds a virtual field to the schema. We can see it, but it never persists
 // So, on every user object ... this.token is now readable!
 
-users.virtual('token').get(function () {
+userSchema.virtual('token').get(function () {
   let tokenObject = {
     username: this.username,
   }
   return jwt.sign(tokenObject, process.env.SECRET, { expiresIn: '1m' });
 });
 
-users.pre('save', async function () {
+userSchema.pre('save', async function () {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 10);
   }
 });
 
 // BASIC AUTH
-users.statics.authenticateBasic = async function (username, password) {
+userSchema.statics.authenticateBasic = async function (username, password) {
   const user = await this.findOne({ username });
   const valid = await bcrypt.compare(password, user.password)
   if (valid) { return user; }
@@ -34,7 +36,7 @@ users.statics.authenticateBasic = async function (username, password) {
 }
 
 // BEARER AUTH
-users.statics.authenticateWithToken = async function (token) {
+userSchema.statics.authenticateWithToken = async function (token) {
   try {
     const parsedToken = jwt.verify(token, process.env.SECRET);
     const user = this.findOne({ username: parsedToken.username });
@@ -46,4 +48,4 @@ users.statics.authenticateWithToken = async function (token) {
 };
 
 
-module.exports = mongoose.model('users', users);
+module.exports = mongoose.model('users', userSchema);

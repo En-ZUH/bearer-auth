@@ -1,5 +1,5 @@
 # Bearer Auth
-
+ 
 ### An Authentication Server, has various end points that performs sign in, sign up, users and secret.
 ****
 ### End Points
@@ -35,3 +35,4 @@ https://bearer-auth-enas.herokuapp.com/secret
 ### UML Diagram
 
 ![img](uml7.jpg)
+ 

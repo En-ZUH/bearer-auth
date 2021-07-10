@@ -5,19 +5,20 @@
 ### End Points
 *  /signin : POST Method
    You can Signin by sending post request using postman.
-    https://bearer-auth-enas.herokuapp.com/signin (login)
+   * https://bearer-auth-enas.herokuapp.com/signin (login)
 
 *  /signup : POST Method
    You can Signup by sending post request using postman.
-    https://bearer-auth-enas.herokuapp.com/signup (creat)
+   * https://bearer-auth-enas.herokuapp.com/signup (creat)
 
-* /users : GET Method
+*  /users : GET Method
 Enter the 'token', and send GET request using postman.
-https://bearer-auth-enas.herokuapp.com/users  
+   * https://bearer-auth-enas.herokuapp.com/users  
 
-* /secret : GET Method
+*  /secret : GET Method
 Enter the 'token', and send GET request using postman.
-https://bearer-auth-enas.herokuapp.com/secret  
+   * https://bearer-auth-enas.herokuapp.com/secret  
+
 ****
 
 ## Deployment
